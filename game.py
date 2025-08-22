@@ -2,6 +2,8 @@ import pygame
 
 import sys
 
+from entity import Entity
+
 
 class Game:
     def __init__(self, title: str, height: int, width: int):
@@ -17,13 +19,20 @@ class Game:
 
         self.running = True
 
+        self.bg = pygame.image.load("assets/background.png")
+
+        self.player = Entity((200, 200), (100, 80), "assets/bird.png")
+
     def run(self):
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
 
-            self.screen.fill("purple")
+            self.screen.blit(self.bg, (0, 0))
+
+            self.player.update()
+            self.player.render(self.screen)
 
             pygame.display.flip()
 
