@@ -16,12 +16,16 @@ class Game:
 
         self.screen = pygame.display.set_mode((self.height, self.width))
         self.clock = pygame.time.Clock()
+        self.dt = 0
 
         self.running = True
 
         self.bg = pygame.image.load("assets/background.png")
 
-        self.player = Entity((200, 200), (100, 80), "assets/bird.png")
+        self.player = Entity((400, 400),
+                             (110, 80),
+                             "assets/bird.png",
+                             True)
 
     def run(self):
         while self.running:
@@ -31,10 +35,12 @@ class Game:
 
             self.screen.blit(self.bg, (0, 0))
 
-            self.player.update()
+            self.player.update(self.dt)
             self.player.render(self.screen)
 
             pygame.display.flip()
+
+            self.dt = self.clock.tick(60) / 1000
 
         pygame.quit()
         sys.exit()
