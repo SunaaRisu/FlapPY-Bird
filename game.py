@@ -2,7 +2,7 @@ import pygame
 
 import sys
 
-from entity import Entity
+from gameobject import Gameobject
 
 
 class Game:
@@ -22,7 +22,7 @@ class Game:
 
         self.bg = pygame.image.load("assets/background.png")
 
-        self.player = Entity((400, 400),
+        self.player = Gameobject((400, 400),
                              (110, 80),
                              "assets/bird.png",
                              True)

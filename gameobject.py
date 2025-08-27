@@ -1,7 +1,7 @@
 import pygame
 
 
-class Entity:
+class Gameobject:
     def __init__(self,
                  pos: list[int, int],
                  size: tuple[int, int],
