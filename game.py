@@ -2,7 +2,7 @@ import pygame
 
 import sys
 
-from gameobject import Gameobject
+from player import Player
 
 
 class Game:
@@ -22,16 +22,21 @@ class Game:
 
         self.bg = pygame.image.load("assets/background.png")
 
-        self.player = Gameobject((400, 400),
+        self.player = Player((400, 400),
                              (110, 80),
                              "assets/bird.png",
-                             True)
+                            True)
 
     def run(self):
         while self.running:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
+                match event.type:
+                    case pygame.QUIT:
+                        self.running = False
+                        break
+                    case pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            self.player.update(self.dt, [0, 1])
 
             self.screen.blit(self.bg, (0, 0))
 
