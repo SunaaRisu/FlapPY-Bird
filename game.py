@@ -3,6 +3,8 @@ import pygame
 import sys
 
 from player import Player
+from gameobject import Gameobject
+from random import randint
 
 
 class Game:
@@ -25,7 +27,11 @@ class Game:
         self.player = Player((400, 400),
                              (110, 80),
                              "assets/bird.png",
-                            True)
+                             True)
+        self.gameobjects = []
+
+        self.SPAWNPIPE = pygame.USEREVENT
+        pygame.time.set_timer(self.SPAWNPIPE, 2000)
 
     def run(self):
         while self.running:
@@ -33,15 +39,20 @@ class Game:
                 match event.type:
                     case pygame.QUIT:
                         self.running = False
-                        break
                     case pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
                             self.player.update(self.dt, [0, 1])
+                    case self.SPAWNPIPE:
+                        self.gameobjects.append(Gameobject((1600, (-900 - randint(0, 450))), (25 * 7, 450 * 7), "assets/pipe.png", velocity=[-7, 0]))
 
             self.screen.blit(self.bg, (0, 0))
 
             self.player.update(self.dt)
             self.player.render(self.screen)
+
+            for object in self.gameobjects:
+                object.update(self.dt)
+                object.render(self.screen)
 
             pygame.display.flip()
 
@@ -49,4 +60,3 @@ class Game:
 
         pygame.quit()
         sys.exit()
-
